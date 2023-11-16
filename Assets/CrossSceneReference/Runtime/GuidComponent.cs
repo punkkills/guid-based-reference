@@ -151,6 +151,10 @@ public class GuidComponent : MonoBehaviour, ISerializationCallbackReceiver
             serializedGuid = null;
             guid = System.Guid.Empty;
         }
+        else if ((serializedGuid == null || serializedGuid.Length != 16) && guid != System.Guid.Empty)
+        {
+            serializedGuid = guid.ToByteArray();
+        }
         else
 #endif
         {
