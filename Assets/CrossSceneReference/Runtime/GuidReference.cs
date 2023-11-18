@@ -65,6 +65,22 @@ public class GuidReference : ISerializationCallbackReceiver
         guid = target.GetGuid();
     }
 
+    public bool TryResolve(bool callAdded = true)
+    {
+        if (!isCacheSet)
+        {
+            cachedReference = GuidManager.ResolveGuid(guid, addDelegate, removeDelegate);
+            isCacheSet = true;
+        }
+
+        if (cachedReference != null && callAdded)
+        {
+            OnGuidAdded(cachedReference);
+        }
+
+        return cachedReference != null;
+    }
+
     private void GuidAdded(GameObject go)
     {
         cachedReference = go;
